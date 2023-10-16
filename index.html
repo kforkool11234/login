@@ -123,8 +123,7 @@ appId: "1:12884520155:web:2cd183033fab9dc07cf0fe"
     const token = credential.accessToken;
     // The signed-in user info.
     const user = result.user;
-      console.log(user)
-    alert(user.displayName,user.photo.url)
+    alert(user.displayName,user.PhotoUrl)
     // IdP data available using getAdditionalUserInfo(result)
     // ...
   }).catch((error) => {
