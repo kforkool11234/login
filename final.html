@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V-Grub login</title>
+<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
+    <link rel="stylesheet" href="login.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="login-container">
+        <h1 style="text-align: center; margin-left: 20px;">V-GRUB</h1>
+        
+        <!-- Login Form -->
+        <form id="loginForm">
+            <label for="loginEmail">Email:</label>
+            <input type="email" id="loginEmail" name="email" required><br>
+
+            <label for="loginPassword">Password:</label>
+            <input type="password" id="loginPassword" name="password" required><br>
+
+            <button type="button" id="login">Login</button>
+            <p>Don't have a account <a href="#" onclick="toggleForm()">Signup</a></p>
+        </form>
+
+        <!-- Signup Form -->
+        <form id="signupForm" style="display: none;">
+            <label for="signupEmail">Email:</label>
+            <input type="email" id="signupEmail" name="email" required><br>
+
+            <label for="signupPassword">Password:</label>
+            <input type="password" id="signupPassword" name="password" required><br>
+
+            <button type="button"  id="signup">Sign Up</button>
+            <p>Already have a account <a href="#" onclick="toggleForm()" id="toggleForm">Login</a></p>
+        </form>
+
+        <div class="google-btn" style="margin-left: 50px; margin-top: 30px;" id="g_login">
+          <div class="google-icon-wrapper" >
+            <img class="google-icon" style="margin-left: -10px;" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+          </div>
+          <p class="btn-text"><b>Sign in with google</b></p>
+        </div>        
+    </div>
+</body>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+    import {GoogleAuthProvider, signInWithPopup} from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+apiKey: "AIzaSyDhZa9a3arU0xbvyYkhj0pjQ9FNIck_k8M",
+authDomain: "login-32316.firebaseapp.com",
+projectId: "login-32316",
+storageBucket: "login-32316.appspot.com",
+messagingSenderId: "12884520155",
+appId: "1:12884520155:web:2cd183033fab9dc07cf0fe"
+};
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const provider = new GoogleAuthProvider(app);
+    const auth = getAuth();
+    console.log(app);
+
+    
+
+    //----- New Registration code start	  
+    document.getElementById("signup").addEventListener("click", function() {
+        var email =  document.getElementById("signupEmail").value;
+        var password = document.getElementById("signupPassword").value;
+        //For new registration
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          console.log(user);
+          alert("Registration successfully!!");
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+          console.log(errorMessage);
+          alert(error);
+        });		  		  
+    });
+    //----- End
+
+    //----- Login code start	  
+    document.getElementById("login").addEventListener("click", function() {
+        var email =  document.getElementById("loginEmail").value;
+        var password = document.getElementById("loginPassword").value;
+
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          console.log(user);
+          alert(user.email+" Login successfully!!!");
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorMessage);
+          alert(errorMessage);
+        });		  		  
+    });
+    document.getElementById("g_login").addEventListener("click", function() {
+      signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    alert(user.displayName)
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    alert(error)
+    // ...
+  });
+})
+  </script>
+  <script >
+    
+function toggleForm() {
+var loginForm = document.getElementById("loginForm");
+var signupForm = document.getElementById("signupForm");
+
+if (loginForm.style.display === "none") {
+ loginForm.style.display = "block";
+ signupForm.style.display = "none";
+} else {
+ loginForm.style.display = "none";
+ signupForm.style.display = "block";
+}
+}
+
+
+  </script>
+</html>
