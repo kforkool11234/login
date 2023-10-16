@@ -124,7 +124,7 @@ appId: "1:12884520155:web:2cd183033fab9dc07cf0fe"
     // The signed-in user info.
     const user = result.user;
       console.log(user)
-    alert(user.displayName)
+    alert(user.displayName,user.photo.url)
     // IdP data available using getAdditionalUserInfo(result)
     // ...
   }).catch((error) => {
