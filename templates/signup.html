@@ -1,0 +1,23 @@
+<!-- templates/signup.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Signup</h2>
+    <div class="ben10 "></div>
+    <div class="barbie "></div>
+    <form action="/signup" method="post">
+        <label for="signupUsername">Username:</label>
+        <input type="text" id="signupUsername" name="username" required><br>
+        <label for="signuname">name:</label>
+        <input type="text" id="signupname" name="name" required><br>
+        <label for="signupPassword">Password:</label>
+        <input type="password" id="signupPassword" name="password" required><br>
+        <button type="submit">Signup</button>
+    </form>
+    <p>Already have an account? <a href="/login">Login</a></p>
+</body>
+</html>
