@@ -21,6 +21,8 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error_message = None  # Initialize error message
+
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -33,9 +35,10 @@ def login():
             session['username'] = username
             return redirect(url_for('profile'))
 
-        return jsonify({'error': 'Invalid username or password!'}), 401
+        # Set error message if username or password is incorrect
+        error_message = 'Invalid username or password!'
 
-    return render_template('login.html')
+    return render_template('login.html', error_message=error_message)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():

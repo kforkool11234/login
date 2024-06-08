@@ -9,6 +9,11 @@
     <div class="ben10 "></div>
     <div class="barbie "></div>
     <h2>Login</h2>
+    {% if error_message %}
+    <script>
+        alert("{{ error_message }}");  // Display error message as a pop-up
+    </script>
+    {% endif %}
     <form action="/login" method="post">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br>
